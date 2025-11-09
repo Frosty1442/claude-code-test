@@ -2,6 +2,20 @@
 
 Complete AFL++ fuzzing setup for NASA's Core Flight System with AddressSanitizer and UndefinedBehaviorSanitizer.
 
+## ⭐ NEW: CubeSat Peripheral Extensions (Nov 9, 2025)
+
+Added realistic CubeSat hardware based on **OreSat** and **TEMPEST-D** missions:
+
+- **ADCS App** - Attitude control (magnetometer, gyro, sun sensors, reaction wheels, magnetorquers)
+- **GPS App** - NMEA 0183 parsing, position/velocity/time
+- **Power App** - Solar panels, MPPT, battery management
+
+**Fuzzing Harnesses:**
+- `gps_nmea_fuzzer.c` - GPS sentence parsing (380 lines, 3 intentional bugs)
+- `adcs_sensor_fuzzer.c` - Sensor packet validation (372 lines, 4 intentional bugs)
+
+📖 **[Read Complete Documentation](CUBESAT_PERIPHERALS.md)** (500+ lines covering ADCS, GPS, Power systems)
+
 ## 🎯 Quick Start
 
 **Want to start fuzzing immediately?** → Read **[TUTORIAL.md](cfs-fuzzing/TUTORIAL.md)**
