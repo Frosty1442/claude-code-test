@@ -1,0 +1,59 @@
+# AFL++ Dictionary for ADCS Sensor Packet Fuzzing
+# Binary protocol mutation hints
+
+# Sync word (little-endian 0xADC5)
+"\xC5\xAD"
+
+# Packet types
+"\x01"  # Magnetometer
+"\x02"  # IMU
+"\x03"  # Sun sensor
+"\x04"  # Quaternion
+
+# Common lengths
+"\x10"  # 16 bytes
+"\x18"  # 24 bytes
+"\x20"  # 32 bytes
+
+# Float representations (IEEE 754)
+# Zero
+"\x00\x00\x00\x00"
+
+# 1.0
+"\x00\x00\x80\x3F"
+
+# -1.0
+"\x00\x00\x80\xBF"
+
+# NaN
+"\x00\x00\xC0\x7F"
+
+# Infinity
+"\x00\x00\x80\x7F"
+
+# Small positive
+"\x00\x00\x80\x3E"  # 0.25
+
+# Large positive
+"\x00\x00\x7A\x44"  # 1000.0 (triggers extreme velocity bug)
+
+# Magnetometer field values (nT)
+"\x00\x00\x70\x45"  # 30000.0 nT
+"\x00\x00\xA0\x45"  # 40000.0 nT
+
+# Checksums
+"\x12\x34"
+"\x00\x00"
+"\xFF\xFF"
+
+# Complete valid magnetometer packet
+"\xC5\xAD\x01\x10\x00\x00\x70\x45\x00\x00\x70\x45\x00\x00\xA0\x45\x00\x12\x34"
+
+# Complete valid IMU packet
+"\xC5\xAD\x02\x20\x40\x00\x00\x00\x40\x40\x00\x00\x3F\x80\x00\x00"
+
+# Malformed: All-zero quaternion (triggers div-by-zero)
+"\xC5\xAD\x04\x10\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+
+# Malformed: Extreme values
+"\xC5\xAD\x02\x20\x00\x00\x7A\x44\x00\x00\x7A\x44\x00\x00\x7A\x44"

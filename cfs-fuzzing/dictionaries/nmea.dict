@@ -1,0 +1,94 @@
+# AFL++ Dictionary for GPS NMEA Fuzzing
+# Provides mutation hints for better coverage
+
+# NMEA sentence identifiers
+"$GP"
+"$GN"
+"$GL"
+"GGA"
+"RMC"
+"GSA"
+"GSV"
+"VTG"
+"GLL"
+
+# Complete sentence headers
+"$GPGGA"
+"$GPRMC"
+"$GPGSA"
+"$GPGSV"
+"$GNGGA"
+"$GNRMC"
+
+# Hemispheres
+"N"
+"S"
+"E"
+"W"
+
+# Fix quality indicators
+"0"  # No fix
+"1"  # GPS fix
+"2"  # DGPS fix
+"3"  # PPS fix
+"4"  # RTK
+"5"  # Float RTK
+"6"  # Dead reckoning
+
+# Status indicators
+"A"  # Active
+"V"  # Void
+
+# Common coordinate values (edge cases)
+"0000.000"
+"9000.000"  # 90 degrees (pole)
+"18000.000" # 180 degrees
+"00000.000"
+
+# Altitude values
+"0.0"
+"100.0"
+"10000.0"
+"-100.0"
+
+# DOP values
+"0.9"
+"1.0"
+"2.5"
+"99.9"
+
+# Checksum delimiters
+"*"
+"*00"
+"*FF"
+
+# Common NMEA field separators
+","
+",,"
+",,,"
+
+# Termination sequences
+"\r\n"
+"\n"
+
+# Satellite PRNs
+"01"
+"12"
+"24"
+"32"
+
+# Complete valid GGA example
+"$GPGGA,123519.000,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47"
+
+# Edge case: Maximum latitude
+"$GPGGA,000000.000,9000.000,N,00000.000,E,1,04,2.5,100.0,M,0.0,M,,*"
+
+# Edge case: Maximum longitude
+"$GPGGA,000000.000,0000.000,N,18000.000,E,1,04,2.5,100.0,M,0.0,M,,*"
+
+# Malformed: Invalid latitude (triggers bug)
+"9500.000"
+"9999.999"
+
+# Malformed: Missing fields
+"$GPGGA,,,,,,,,,,,,,*"
